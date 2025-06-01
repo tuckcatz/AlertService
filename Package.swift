@@ -4,7 +4,7 @@ import PackageDescription
 let package = Package(
     name: "AlertService",
     platforms: [
-       .macOS(.v13)
+        .macOS(.v13)
     ],
     dependencies: [
         // 💧 A server-side Swift web framework.
@@ -26,6 +26,7 @@ let package = Package(
                 .product(name: "NIOCore", package: "swift-nio"),
                 .product(name: "NIOPosix", package: "swift-nio"),
             ],
+            path: "Sources/AlertService", // ✅ updated path
             swiftSettings: swiftSettings
         ),
         .testTarget(
@@ -34,11 +35,14 @@ let package = Package(
                 .target(name: "AlertService"),
                 .product(name: "VaporTesting", package: "vapor"),
             ],
+            path: "Tests/AlertServiceTests", // ✅ make sure test folder matches
             swiftSettings: swiftSettings
         )
     ]
 )
 
-var swiftSettings: [SwiftSetting] { [
-    .enableUpcomingFeature("ExistentialAny"),
-] }
+var swiftSettings: [SwiftSetting] {
+    [
+        .enableUpcomingFeature("ExistentialAny"),
+    ]
+}
