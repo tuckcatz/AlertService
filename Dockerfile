@@ -17,4 +17,4 @@ COPY --from=builder /app/Public /app/Public
 
 EXPOSE 8080
 
-CMD [".build/release/Run", "serve", "--env", "production", "--hostname", "0.0.0.0", "--port", "8080"]
+CMD [".build/release/AlertService", "serve", "--env", "production", "--hostname", "0.0.0.0", "--port", "8080"]
