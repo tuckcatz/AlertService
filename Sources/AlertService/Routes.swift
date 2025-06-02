@@ -10,6 +10,8 @@ func routes(_ app: Application) throws {
     }
 
     app.post("send-alert") { req async throws -> HTTPStatus in
+        app.logger.info("📩 /send-alert endpoint triggered")
+
         struct AlertRequest: Content {
             let to: String
             let message: String
