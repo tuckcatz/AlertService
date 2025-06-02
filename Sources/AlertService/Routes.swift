@@ -10,8 +10,6 @@ func routes(_ app: Application) throws {
     }
 
     app.post("send-alert") { req async throws -> HTTPStatus in
-        app.logger.info("📩 /send-alert endpoint triggered")
-
         struct AlertRequest: Content {
             let to: String
             let message: String
@@ -53,7 +51,6 @@ func routes(_ app: Application) throws {
             throw Abort(.badRequest, reason: "Failed to send SMS: \(error ?? "Unknown error")")
         }
 
-        app.logger.info("✅ SMS sent to \(alert.to)")
         return .ok
     }
 }
