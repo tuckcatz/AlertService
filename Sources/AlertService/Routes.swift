@@ -16,7 +16,8 @@ func routes(_ app: Application) throws {
         }
 
         let alert = try req.content.decode(AlertRequest.self)
-
+        app.logger.info("📨 Attempting to send SMS to \(alert.to)")
+        
         // Load environment variables
         guard
             let accountSID = Environment.get("TWILIO_ACCOUNT_SID"),
@@ -47,8 +48,9 @@ func routes(_ app: Application) throws {
         }
 
         guard response.status == .created else {
-            let error = try? response.body?.getString(at: 0, length: response.body?.readableBytes ?? 0)
-            throw Abort(.badRequest, reason: "Failed to send SMS: \(error ?? "Unknown error")")
+            let errorData = response.body ?? ByteBuffer()
+            let error = errorData.getString(at: 0, length: errorData.readableBytes) ?? "Unknown error"
+            throw Abort(.badRequest, reason: "Failed to send SMS: \(error)")
         }
 
         return .ok
